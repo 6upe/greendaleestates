@@ -21,14 +21,24 @@
 
 @media (max-width: 768px) {
   .hero_area {
-    background: none;
-    background-color: #e9eefc;
-    height: auto;
+    background-image: url(../images/hero-bg.jpg);
+    position: relative;
+    background-repeat: no-repeat;
+    background-position: top right;
+    background-size: 100% 60%;
   }
+
+  /* .hero_area {
+    background-image: url(../images/hero-bg.jpg);
+    position: relative;
+    background-repeat: no-repeat;
+    background-position: top right;
+    background-size: 60% 100%;
+  } */
 
 
   .custom_menu-btn button span {
-    background-color: #0f2480;
+    background-color: #18800f;
   }
 
   .sub_page .custom_menu-btn button span {

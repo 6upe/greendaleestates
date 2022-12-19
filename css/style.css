@@ -49,11 +49,11 @@ body {
 
 /*header section*/
 .hero_area {
-  background-image: url(../images/hero-bg.jpg);
+  background-image: url(../images/hero-bg.png);
   position: relative;
   background-repeat: no-repeat;
   background-position: top right;
-  background-size: 60% 100%;
+  background-size: 90% 90%;
 }
 
 .sub_page .hero_area {
@@ -63,7 +63,8 @@ body {
 }
 
 .header_section {
-  overflow-x: hidden;
+  overflow: hidden;
+  
 }
 
 .header_section .container-fluid {
@@ -109,10 +110,11 @@ body {
   color: #18800f;
 }
 
-/* .logo{
-  width: 20%;
-  height: 10%;
-} */
+.logo{
+  margin: 10px;
+  width: 180px;
+  height: 60px
+}
 
 a,
 a:hover,
@@ -152,9 +154,9 @@ a:focus {
           align-items: center;
 }
 
-.navbar-brand img {
-  width: 90px;
-}
+/* .navbar-brand img {
+  width: 120px;
+} */
 
 .custom_nav-container {
   z-index: 99999;

@@ -21,7 +21,7 @@
 
 @media (max-width: 768px) {
   .hero_area {
-    background-image: url(../images/hero-bg.jpg);
+    background: none;
     position: relative;
     background-repeat: no-repeat;
     background-position: top right;

@@ -3,10 +3,9 @@ function auth(){
     var password = document.forms['adminForm']["user_password"].value;
 
     if(email == "greendale@email.com" && password == 1234){
-        // alert(email + " and " + password);
-        // return true;
+        alert("Admin Log in Success");
+        // window.document.location('/admin.html');
     }else{
         alert("wrong credentials");
-        return false;
     }
 }

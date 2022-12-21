@@ -1,12 +1,12 @@
-var uEmail = document.getElementById("user_email").value;
-var uPassword = document.getElementById("user_password").value;
-
 function auth(){
-    // if(uEmail == "greendale@email.com" && uPassword == 1234){
-        // window.location = "admin.html";
-    // }else{
-        // alert(uEmail + ' and ' + uPassword);
-        // console.log('email: ' + uEmail);
-        // console.log('password: ' + uPassword);
-    // }
+    var email = document.forms["adminForm"]["user_email"].value;
+    var password = document.forms['adminForm']["user_password"].value;
+
+    if(email == "greendale@email.com" && password == 1234){
+        // alert(email + " and " + password);
+        // return true;
+    }else{
+        alert("wrong credentials");
+        return false;
+    }
 }

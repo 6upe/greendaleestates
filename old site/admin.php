@@ -7,14 +7,16 @@
         $propertyName = $_POST['property-name'];
         $propertyDesc = $_POST['property-desc'];
         $estateFor = $_POST['estate-for'];
-        
+        $price = $_POST['property-price'];
+        $location = $_POST['property-location'];
+        $datePosted = date("F j, Y, g:i a"); 
                
         
         // $con->query($InsertQuery);
 
-        echo 'P_Name: ' . $propertyName . '<br>';
-        echo 'P_Desc: ' . $propertyDesc . '<br>';
-        echo 'P_Estate: ' . $estateFor . '<br>';
+        // echo 'P_Name: ' . $propertyName . '<br>';
+        // echo 'P_Desc: ' . $propertyDesc . '<br>';
+        // echo 'P_Estate: ' . $estateFor . '<br>';
 
         // if(isset($_FILES['media-files'])){
           // $mediaFiles = $_FILES['media-files'];
@@ -42,13 +44,15 @@
 
             if($i == 0){
               mkdir("media/" . $propertyName . $pid . "/");
-              $InsertQuery = $con->prepare("insert into property (property_name, property_desc, estate_for, media_path) values('$propertyName','$propertyDesc','$estateFor', ' $newDir')");
+              $InsertQuery = $con->prepare("insert into property ( property_name, property_desc, estate_for, media_path, price, location, date_posted) values('$propertyName','$propertyDesc','$estateFor', ' $newDir', '$price', '$location', '$datePosted')");
               $InsertQuery->execute();
               // $insertMediaPath ="insert into property (media_path) values()";
               // $con->query($insertMediaPath);
             }
 
+            
             $mpid = $pid + 1;
+
             $InsertMediaFilePath = "insert into property_media (property_id, media_name) values('$mpid','$newMediaPath')";
             $con->query($InsertMediaFilePath);
             // $InsertMediaFilePath = $con->prepare("insert into property_media (property_id, property_media) values('$pid','$newMediaPath')");
@@ -56,7 +60,11 @@
 
             $result = move_uploaded_file($_FILES["media-files"]["tmp_name"][$i], $newDir . $fPath);
             
+
           }
+
+          Header('Location: admin.php');
+
         // }        
 
     }
@@ -99,7 +107,7 @@
 
 <body>
 
-  <!-- POST PROPERTY MODAL ENDS -->
+  <!-- POST PROPERTY MODAL STARTS  -->
 
   <!-- Button trigger modal -->
   <!-- Modal -->
@@ -115,11 +123,22 @@
         </div>
         <div class="modal-body">
           <form name="propertyForm" action="admin.php" method="post" enctype="multipart/form-data">
-            <div class="form-group">
-
+            
+          <div class="form-group">
               <input name="property-name" type="text" class="form-control" id="property-name"
                 placeholder="Enter Property Name" required>
             </div>
+
+            <div class="form-group">
+              <input name="property-price" type="text" class="form-control" id="property-price"
+                placeholder="Enter Property Price" required>
+            </div>
+
+            <div class="form-group">
+              <input name="property-location" type="text" class="form-control" id="property-location"
+                placeholder="Enter Property Location" required>
+            </div>
+
             <div class="form-group">
 
               <textarea class="form-control" name="property-desc" id="property-desc" cols="20" rows="5" required>Property description here...
@@ -299,10 +318,16 @@
       <form action="">
         <div class=" form-row">
           <div class="col-md-5">
-            <input type="text" class="form-control" placeholder="Rent, Buy, Sale or Rent Out">
+          <select onChange="change_estates();" id="estate-for" class="form-control form-select" aria-label="Default select example">
+            <option selected>Select [Rent, Rent Out, Buy, Sale]</option>
+            <option value="rent">Rent Property</option>
+            <option value="rentOut">Rent Out Property</option>
+            <option value="buy">Buy Property</option>
+            <option value="sale">Sale Out Property</option>
+          </select>
           </div>
           <div class="col-md-5">
-            <input type="text" class="form-control" placeholder="Location">
+            <input id="myInput" type="text" onkeyup="myFunction()" class="form-control" placeholder="Location">
           </div>
           <div class="col-md-2">
             <button type="submit" class="">
@@ -317,13 +342,49 @@
 
   <!-- end find section -->
 
+  <script>
+
+function change_estates(){
+  var estate_for = document.getElementById('estate-for').value;
+  switch(estate_for){
+    case 'rentOut':
+      alert('You are now Being redirected to Greendale Whatsapp');
+      window.location.href = "https://wa.me/260962893773";
+
+  }
+}
+
+function myFunction() {
+  // Declare variables
+  var input, filter, ul, li, a, i, txtValue;
+  input = document.getElementById('myInput');
+  filter = input.value.toUpperCase();
+  ul = document.getElementById("sale_container");
+  li = ul.getElementsByTagName('li');
+
+
+
+  // Loop through all list items, and hide those who don't match the search query
+  for (i = 0; i < li.length; i++) {
+    a = li[i].getElementsByTagName("a")[0];
+    txtValue = a.textContent || a.innerText;
+    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+      li[i].style.display = "";
+    } else {
+      li[i].style.display = "none";
+    }
+  }
+}
+</script>
+
+  
 
   <!-- sale section -->
 
   <section class="sale_section layout_padding-bottom">
     <div class="container-fluid">
 
-      <div class="sale_container">
+      <ul class="sale_container" id="sale_container" style="list-style: none;">
 <?php
   for($i = 0; $i < count($getId); $i++){ 
 
@@ -340,16 +401,18 @@
     ?>
   
 
-  <div class="box">
+  <li class="box" id="property">
           <div class="img-box">
-            <img src="<?php echo $ActiveMediaPath ?>" alt="">
+            <img src="<?php echo $ActiveMediaPath?>" alt=""  width="150px" height="200px">
           </div>
-          <small><i>posted 3hrs ago</i>
-
-          </small>
-          <div class="detail-box">
+          <small>
+          <i>posted <?php echo $getId[$i]['date_posted']?></i> <br>
+          <a href="" id="location">Location: <?php echo $getId[$i]['location']?></a>
+        </small>
+          <div class="detail-box"
             <h6>
               <?php echo $getId[$i]['property_name']?>
+              <sup>K<?php echo $getId[$i]['price']?></sup>
             </h6>
 
             <p>
@@ -357,13 +420,28 @@
             </p>
 
             <div class="property-control">
+            <form method="post">
               <a href="" class="btn btn-primary" data-toggle="modal"
                 data-target=".bd-example-modal-lg<?php echo $getId[$i]['property_id']?>">View More</a>
-              <!-- <a href="" class="btn btn-success">Edit</a> -->
-              <a href="" class="btn btn-danger">delete</a>
+              <input type="submit" name="delete<?php echo $getId[$i]['property_id']?>"  class="btn btn-danger " value="Delete" disabled/>
+
+              <?php
+              $name = 'delete' . $getId[$i]['property_id'];
+              $deleteId = $getId[$i]['property_id'];
+              if(isset($_POST[$name])) {
+                recursiveRemove('/' . $getId[$i]['media_path']);
+                $deleteProperty = $con->prepare("delete from property where property_id = '$deleteId'");
+                $deleteProperty->execute();
+                $deletePropertyMedia = $con->prepare("delete from property_media where property_id = '$deleteId'");
+                $deletePropertyMedia->execute();
+                echo "delete" . $getId[$i]['property_id'] . "is clicked here"; 
+
+               }
+              ?>
+              </form>
             </div>
           </div>
-        </div>
+              </li>
   
   <?php
 
@@ -372,7 +450,7 @@
 ?>
 
 
-      </div>
+</ul>
 
 
 

@@ -161,6 +161,90 @@
   }
 ?>
 
+<!-- RENT BUY MODAL STARTS -->
+<?php
+  for($i = 0; $i < count($getId); $i++){
+
+    $j = $i + 1;
+
+    $getActiveMedia = $con->prepare("select * from property_media where property_id = '$j'");
+    $getActiveMedia->execute();
+    $getActiveMedia = $getActiveMedia->fetchAll(PDO::FETCH_ASSOC);
+
+    // if($i == 0)
+    //   $ActiveMediaPath = $getAllMedia[0]['media_name'];
+    // else
+      $ActiveMediaPath = $getActiveMedia[0]['media_name'];
+    ?>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter<?php echo $getId[$i]['property_id'] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLongTitle"><?php echo $getId[$i]['property_name'] ?> <b>K<?php echo $getId[$i]['price']?></b> </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+<div class="box">
+      <div class="img-box">
+        <img src="<?php echo $ActiveMediaPath ?>" alt=""   width="450px" height="350px">
+      </div>
+      <small>
+      
+      <a href="" id="location">Location: <?php echo $getId[$i]['location']?></a>
+    </small>
+      <div class="detail-box">
+        
+
+        <p>
+          <?php echo $getId[$i]['property_desc']?>
+        </p>
+    </div>
+</div>
+        <hr>
+      <form name="r_form" action="send_request.php" method="post">
+              <div>
+                <input name="r_name" class="form-control my-3" type="text" placeholder="Name" required/>
+              </div>
+              <div>
+                <input  name="r_email" class="form-control my-3" type="email" placeholder="Email" required />
+              </div>
+              <div>
+                <input  name="r_phone" class="form-control my-3" type="text" placeholder="Phone Number" required />
+              </div>
+              <div>
+                <input name="r_message" class="form-control my-3" type="text" class="message-box" placeholder="Message" required />
+              </div>
+              <input type="text" name="id" value="<?php echo $i?>">
+      </div>
+      
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <input name="send-request"  type="submit" class="btn btn-primary" value="Send Request">
+      </div>
+      </form>
+
+
+
+
+
+    </div>
+  </div>
+</div>
+
+
+<?php
+  }
+?>
+<!-- RENT BUY MODAL ENDS -->
+
+
+
 
   <div class="hero_area">
     <!-- header section strats -->
@@ -197,9 +281,9 @@
             <div id="myNav" class="overlay">
               <div class="overlay-content">
                 <a href="index.php">Home</a>
-                <a href="/latest_updates.php">Latest Updates</a>
-                <a href="/about_us.php">About Us</a>
-                <a href="">Chat with Us</a>
+                <a href="latest_updates.php">Latest Updates</a>
+                <a href="about_us.php">About Us</a>
+                <a href= "https://wa.me/260964840235">Chat with Us</a>
                 <a onclick="openNav()" type="button" class="" data-toggle="modal" data-target="#exampleModal">Admin</a>
               </div>
             </div>
@@ -235,36 +319,6 @@
     </section>
     <!-- end slider section -->
   </div>
-
-
-
-
-
-  <!-- find section -->
-  <section class="find_section ">
-    <div class="container">
-      <form action="">
-        <div class=" form-row">
-          <div class="col-md-5">
-            <input type="text" class="form-control" placeholder="Rent, Buy, Sale or Rent Out">
-          </div>
-          <div class="col-md-5">
-            <input type="text" class="form-control" placeholder="Location ">
-          </div>
-          <div class="col-md-2">
-            <button type="submit" class="">
-              search
-            </button>
-          </div>
-        </div>
-
-      </form>
-    </div>
-  </section>
-
-  <!-- end find section -->
-
-
 
 
   <!-- about section -->
@@ -318,7 +372,7 @@
       <div class="sale_container">
 
 <?php
-  for($i = 0; $i < 3; $i++){ 
+  for($i = count($getId) - 1; $i > count($getId) - 4; $i--){ 
 
     $j = $i + 1;
 
@@ -335,15 +389,18 @@
 
   <div class="box">
           <div class="img-box">
-            <img src="<?php echo $ActiveMediaPath ?>" alt="">
+            <img src="<?php echo $ActiveMediaPath ?>" alt=""   width="150px" height="200px">
           </div>
-          <small><i>posted 3hrs ago</i>
-
-          </small>
+          <small>
+          <i>posted <?php echo $getId[$i]['date_posted']?></i> <br>
+          <a href="" id="location">Location: <?php echo $getId[$i]['location']?></a>
+        </small>
           <div class="detail-box">
             <h6>
               <?php echo $getId[$i]['property_name']?>
+              <sup>K<?php echo $getId[$i]['price']?></sup>
             </h6>
+            
 
             <p>
               <?php echo $getId[$i]['property_desc']?>
@@ -351,7 +408,12 @@
 
             <div class="property-control">
               <a href="" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg<?php echo $getId[$i]['property_id']?>">View More</a>
-              <a href="" class="btn btn-success"><?php echo $getId[$i]['estate_for']?></a>
+              <a type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalCenter<?php echo $getId[$i]['property_id'] ?>"><?php 
+              if($getId[$i]['estate_for'] == 'rent')
+                echo 'Rent';
+              else
+                echo 'Buy';
+              ?></a>
 
             </div>
           </div>
@@ -395,7 +457,7 @@
               We aspire to
               provide flawless execution and delivery of our products and
               services. execution and delivery of our products and services.</p>
-            <a href="">
+              <a href= "https://wa.me/260964840235">
               Get A Quote
             </a>
           </div>

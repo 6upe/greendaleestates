@@ -162,6 +162,89 @@
 ?>
 
 
+<!-- RENT BUY MODAL STARTS -->
+<?php
+  for($i = 0; $i < count($getId); $i++){
+
+    $j = $i + 1;
+
+    $getActiveMedia = $con->prepare("select * from property_media where property_id = '$j'");
+    $getActiveMedia->execute();
+    $getActiveMedia = $getActiveMedia->fetchAll(PDO::FETCH_ASSOC);
+
+    // if($i == 0)
+    //   $ActiveMediaPath = $getAllMedia[0]['media_name'];
+    // else
+      $ActiveMediaPath = $getActiveMedia[0]['media_name'];
+    ?>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter<?php echo $getId[$i]['property_id'] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle"><?php echo $getId[$i]['property_name'] ?> <b>K<?php echo $getId[$i]['price']?></b> </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+<div class="box">
+      <div class="img-box">
+        <img src="<?php echo $ActiveMediaPath ?>" alt=""   width="450px" height="350px">
+      </div>
+      <small>
+      
+      <a href="" id="location">Location: <?php echo $getId[$i]['location']?></a>
+    </small>
+      <div class="detail-box">
+        
+
+        <p>
+          <?php echo $getId[$i]['property_desc']?>
+        </p>
+    </div>
+</div>
+        <hr>
+      <form name="r_form" action="send_request.php" method="post">
+              <div>
+                <input name="r_name" class="form-control my-3" type="text" placeholder="Name" required/>
+              </div>
+              <div>
+                <input  name="r_email" class="form-control my-3" type="email" placeholder="Email" required />
+              </div>
+              <div>
+                <input  name="r_phone" class="form-control my-3" type="text" placeholder="Phone Number" required />
+              </div>
+              <div>
+                <input name="r_message" class="form-control my-3" type="text" class="message-box" placeholder="Message" required />
+              </div>
+              <input class="d-none" type="text" name="id" value="<?php echo $i?>">
+      </div>
+      
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <input name="send-request"  type="submit" class="btn btn-primary" value="Send Request">
+      </div>
+      </form>
+
+
+
+
+
+    </div>
+  </div>
+</div>
+
+
+<?php
+  }
+?>
+<!-- RENT BUY MODAL ENDS -->
+
+
 
       <!-- header section strats -->
       <header class="header_section" style="background-color: rgb(241, 241, 241);">
@@ -210,16 +293,23 @@
       <!-- end header section -->
 
       
+
   <!-- find section -->
-  <section class="find_section " style="margin-top: 5%;">
+  <section class="find_section" style="margin-top: 120px;">
     <div class="container">
       <form action="">
         <div class=" form-row">
           <div class="col-md-5">
-            <input type="text" class="form-control" placeholder="Rent, Buy, Sale or Rent Out">
+          <select onChange="change_estates();" id="estate-for" class="form-control form-select" aria-label="Default select example">
+            <option selected>Select [Rent, Rent Out, Buy, Sale]</option>
+            <option value="rent">Rent Property</option>
+            <option value="rentOut">Rent Out Property</option>
+            <option value="buy">Buy Property</option>
+            <option value="sale">Sale Out Property</option>
+          </select>
           </div>
           <div class="col-md-5">
-            <input type="text" class="form-control" placeholder="Location ">
+            <input id="myInput" type="text" onkeyup="myFunction()" class="form-control" placeholder="Location">
           </div>
           <div class="col-md-2">
             <button type="submit" class="">
@@ -233,6 +323,69 @@
   </section>
 
   <!-- end find section -->
+
+  <script>
+
+function change_estates(){
+  var estate_for = document.getElementById('estate-for').value;
+  switch(estate_for){
+    case 'rentOut':
+      if(confirm('Fill in the following form to RENT OUT your Property')){
+       let name = prompt('Enter Name:');
+       let phone = prompt('Enter Phone Number:');
+       let email =  prompt('Enter Email:');
+       let desc = prompt('Description of Property:');
+      
+       let message = 'I want to rent out property, My name is: ' + name + ' Phone Number: ' + phone + ' Email: ' + email + ' Property Descirption: ' + desc;
+
+        window.location.href = "https://wa.me/260962893773?text=" + message;
+    }
+      else
+        window.location.href = "latest_updates.php";
+        break;
+      
+    case 'sale':
+      if(confirm('Fill in the following form to SALE your Property')){
+       let name = prompt('Enter Name:');
+       let phone = prompt('Enter Phone Number:');
+       let email =  prompt('Enter Email:');
+       let desc = prompt('Description of Property:');
+      
+       let message = 'I want to SALE property, My name is: ' + name + ' Phone Number: ' + phone + ' Email: ' + email + ' Property Descirption: ' + desc;
+
+        window.location.href = "https://wa.me/260962893773?text=" + message;
+    }
+      else
+        window.location.href = "latest_updates.php";
+        break;
+    
+    
+  }
+}
+
+function myFunction() {
+  // Declare variables
+  var input, filter, ul, li, a, i, txtValue;
+  input = document.getElementById('myInput');
+  filter = input.value.toUpperCase();
+  ul = document.getElementById("sale_container");
+  li = ul.getElementsByTagName('li');
+
+
+
+  // Loop through all list items, and hide those who don't match the search query
+  for (i = 0; i < li.length; i++) {
+    a = li[i].getElementsByTagName("a")[0];
+    txtValue = a.textContent || a.innerText;
+    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+      li[i].style.display = "";
+    } else {
+      li[i].style.display = "none";
+    }
+  }
+}
+</script>
+
 
 
 
@@ -250,8 +403,7 @@
       </div>
 
       
-      <div class="sale_container">
-
+      <ul class="sale_container" id="sale_container" style="list-style: none;">
       <?php
   for($i = 0; $i < count($getId); $i++){ 
 
@@ -268,17 +420,20 @@
     ?>
   
 
-  <div class="box">
+  <li class="box" id="property">
           <div class="img-box">
-            <img src="<?php echo $ActiveMediaPath ?>" alt="">
+            <img src="<?php echo $ActiveMediaPath ?>" alt=""   width="150px" height="200px">
           </div>
-          <small><i>posted 3hrs ago</i>
-
-          </small>
+          <small>
+          <i>posted <?php echo $getId[$i]['date_posted']?></i> <br>
+          <a href="" id="location">Location: <?php echo $getId[$i]['location']?></a>
+        </small>
           <div class="detail-box">
             <h6>
               <?php echo $getId[$i]['property_name']?>
+              <sup>K<?php echo $getId[$i]['price']?></sup>
             </h6>
+            
 
             <p>
               <?php echo $getId[$i]['property_desc']?>
@@ -286,20 +441,23 @@
 
             <div class="property-control">
               <a href="" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg<?php echo $getId[$i]['property_id']?>">View More</a>
-              <a href="" class="btn btn-success"><?php echo $getId[$i]['estate_for']?></a>
+              <a type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalCenter<?php echo $getId[$i]['property_id'] ?>"><?php 
+              if($getId[$i]['estate_for'] == 'rent')
+                echo 'Rent';
+              else
+                echo 'Buy';
+              ?></a>
 
             </div>
           </div>
-        </div>
+  </li>
   
   <?php
 
   }
  
 ?>
-
-
-      </div>
+      </ul>
       
     </div>
     <div class="btn-box">

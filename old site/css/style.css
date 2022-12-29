@@ -448,7 +448,11 @@ a:focus {
           justify-content: center;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
+  /* text-decoration: none; */
+  
 }
+
+
 
 .sale_section .sale_container .box {
   -ms-flex-preferred-size: 32%;

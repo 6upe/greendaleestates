@@ -763,7 +763,6 @@ if(count($getId) >= 3)
               </div>
               <p>
                 <small>info@greendale-estates.com</small>
-
               </p>
             </div>
           </div>

@@ -284,7 +284,7 @@
                 <a href="latest_updates.php">Latest Updates</a>
                 <a href="about_us.php">About Us</a>
                 <a href= "https://wa.me/260964840235">Chat with Us</a>
-                <a onclick="openNav()" type="button" class="" data-toggle="modal" data-target="#exampleModal">Admin</a>
+                <!-- <a onclick="openNav()" type="button" class="" data-toggle="modal" data-target="#exampleModal">Admin</a> -->
               </div>
             </div>
           </div>
@@ -292,6 +292,7 @@
       </div>
     </header>
     <!-- end header section -->
+
     <!-- slider section -->
     <section class="slider_section ">
       <div class="container-fluid">

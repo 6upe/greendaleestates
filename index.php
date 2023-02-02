@@ -762,7 +762,7 @@ if(count($getId) >= 3)
                 <img src="images/mail.png" width="18px" alt="">
               </div>
               <p>
-                <small>greenadaleestateltd@gmail.com</small>
+                <small>info@greendale-estates.com</small>
 
               </p>
             </div>

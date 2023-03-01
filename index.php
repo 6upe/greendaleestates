@@ -61,12 +61,13 @@
             </div>
             <div class="form-group">
               <!-- <label for="inputPassword">Password</label> -->
-              <input name="user_password" type="password" class="form-control" id="inputPassword" placeholder="Password">
+              <input name="user_password" type="password" class="form-control" id="inputPassword"
+                placeholder="Password">
             </div>
             <!-- <div class="form-group">
               <label class="form-check-label"><input type="checkbox"> Remember me</label>
             </div> -->
-            <input type="submit" value="Sign In"  class="btn btn-success"/>
+            <input type="submit" value="Sign In" class="btn btn-success" />
           </form>
         </div>
         <div class="modal-footer">
@@ -85,13 +86,15 @@
 
   <!-- <button type="button" class="btn btn-primary" >Large modal</button> -->
 
-  <div class="modal fade bd-example-modal-lg<?php echo $getId[$i]['property_id'] ?>" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
-    aria-hidden="true">
+  <div class="modal fade bd-example-modal-lg<?php echo $getId[$i]['property_id'] ?>" tabindex="-1" role="dialog"
+    aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
 
-        <div class="modal-header"> 
-          <h5 class="modal-title" id="exampleModalLabel"><?php echo $getId[$i]['property_name'] ?> | <a href="">Watch Short Video </a></h5>
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">
+            <?php echo $getId[$i]['property_name'] ?> | <a href="">Watch Short Video </a>
+          </h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -114,31 +117,35 @@
         ?>
 
         <div class="modal-body">
-          <div id="carouselExampleControls<?php echo $getId[$i]['property_id'] ?>" class="carousel slide" data-ride="carousel">
+          <div id="carouselExampleControls<?php echo $getId[$i]['property_id'] ?>" class="carousel slide"
+            data-ride="carousel">
             <div class="carousel-inner">
 
-            <?php
+              <?php
                 for($k = 0; $k < count($getMedia); $k++){
                   
             ?>
-                      <div class="carousel-item
+              <div class="carousel-item
                         <?php
                           if($k == 0)
                             echo ' active';
                         ?>
                       ">
-                          <img class="d-block img-fluid mx-auto" src="<?php echo $getMedia[$k]['media_name'] ?>" alt="Second slide">
-                      </div>
-            <?php
+                <img class="d-block img-fluid mx-auto" src="<?php echo $getMedia[$k]['media_name'] ?>"
+                  alt="Second slide">
+              </div>
+              <?php
                 }
             ?>
 
             </div>
-            <a class="carousel-control-prev" href="#carouselExampleControls<?php echo $getId[$i]['property_id'] ?>" role="button" data-slide="prev">
+            <a class="carousel-control-prev" href="#carouselExampleControls<?php echo $getId[$i]['property_id'] ?>"
+              role="button" data-slide="prev">
               <span class="carousel-control-prev-icon" aria-hidden="true"></span>
               <span class="sr-only">Previous</span>
             </a>
-            <a class="carousel-control-next" href="#carouselExampleControls<?php echo $getId[$i]['property_id'] ?>" role="button" data-slide="next">
+            <a class="carousel-control-next" href="#carouselExampleControls<?php echo $getId[$i]['property_id'] ?>"
+              role="button" data-slide="next">
               <span class="carousel-control-next-icon" aria-hidden="true"></span>
               <span class="sr-only">Next</span>
             </a>
@@ -161,8 +168,8 @@
   }
 ?>
 
-<!-- RENT BUY MODAL STARTS -->
-<?php
+  <!-- RENT BUY MODAL STARTS -->
+  <?php
   for($i = 0; $i < count($getId); $i++){
 
     $j = $i + 1;
@@ -178,70 +185,78 @@
     ?>
 
 
-<!-- Modal -->
-<div class="modal fade" id="exampleModalCenter<?php echo $getId[$i]['property_id'] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-      <h5 class="modal-title" id="exampleModalLongTitle"><?php echo $getId[$i]['property_name'] ?> <b>K<?php echo $getId[$i]['price']?></b> </h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModalCenter<?php echo $getId[$i]['property_id'] ?>" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">
+            <?php echo $getId[$i]['property_name'] ?> <b>K
+              <?php echo $getId[$i]['price']?>
+            </b>
+          </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+
+          <div class="box">
+            <div class="img-box">
+              <img src="<?php echo $ActiveMediaPath ?>" alt="" width="450px" height="350px">
+            </div>
+            <small>
+
+              <a href="" id="location">Location:
+                <?php echo $getId[$i]['location']?>
+              </a>
+            </small>
+            <div class="detail-box">
+
+
+              <p>
+                <?php echo $getId[$i]['property_desc']?>
+              </p>
+            </div>
+          </div>
+          <hr>
+          <form name="r_form" action="send_request.php" method="post">
+            <div>
+              <input name="r_name" class="form-control my-3" type="text" placeholder="Name" required />
+            </div>
+            <div>
+              <input name="r_email" class="form-control my-3" type="email" placeholder="Email" required />
+            </div>
+            <div>
+              <input name="r_phone" class="form-control my-3" type="text" placeholder="Phone Number" required />
+            </div>
+            <div>
+              <input name="r_message" class="form-control my-3" type="text" class="message-box" placeholder="Message"
+                required />
+            </div>
+            <input class="d-none" type="text" name="id" value="<?php echo $i?>">
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <input name="send-request" type="submit" class="btn btn-primary" value="Send Request">
+        </div>
+        </form>
+
+
+
+
+
       </div>
-      <div class="modal-body">
-
-<div class="box">
-      <div class="img-box">
-        <img src="<?php echo $ActiveMediaPath ?>" alt=""   width="450px" height="350px">
-      </div>
-      <small>
-      
-      <a href="" id="location">Location: <?php echo $getId[$i]['location']?></a>
-    </small>
-      <div class="detail-box">
-        
-
-        <p>
-          <?php echo $getId[$i]['property_desc']?>
-        </p>
-    </div>
-</div>
-        <hr>
-      <form name="r_form" action="send_request.php" method="post">
-              <div>
-                <input name="r_name" class="form-control my-3" type="text" placeholder="Name" required/>
-              </div>
-              <div>
-                <input  name="r_email" class="form-control my-3" type="email" placeholder="Email" required />
-              </div>
-              <div>
-                <input  name="r_phone" class="form-control my-3" type="text" placeholder="Phone Number" required />
-              </div>
-              <div>
-                <input name="r_message" class="form-control my-3" type="text" class="message-box" placeholder="Message" required />
-              </div>
-              <input class="d-none" type="text" name="id" value="<?php echo $i?>">
-      </div>
-      
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <input name="send-request"  type="submit" class="btn btn-primary" value="Send Request">
-      </div>
-      </form>
-
-
-
-
-
     </div>
   </div>
-</div>
 
 
-<?php
+  <?php
   }
 ?>
-<!-- RENT BUY MODAL ENDS -->
+  <!-- RENT BUY MODAL ENDS -->
 
 
 
@@ -283,9 +298,8 @@
                 <a href="index.php">Home</a>
                 <a href="latest_updates.php">Latest Updates</a>
                 <a href="about_us.php">About Us</a>
-                <a href= "https://wa.me/260964840235">Chat with Us</a>
-                <!-- A COMMENT FROM GIT TO HOSTINGER -->
-                <!-- <a onclick="openNav()" type="button" class="" data-toggle="modal" data-target="#exampleModal">Admin</a> -->
+                <a href="https://wa.me/260964840235">Chat with Us</a>
+                <!--<a onclick="openNav()" type="button" class="" data-toggle="modal" data-target="#exampleModal">Admin</a>-->
               </div>
             </div>
           </div>
@@ -293,7 +307,6 @@
       </div>
     </header>
     <!-- end header section -->
-
     <!-- slider section -->
     <section class="slider_section ">
       <div class="container-fluid">
@@ -373,7 +386,7 @@
       </div>
       <div class="sale_container">
 
-<?php
+        <?php
 if(count($getId) >= 3)
   for($i = count($getId) - 1; $i > count($getId) - 4; $i--){ 
 
@@ -388,47 +401,57 @@ if(count($getId) >= 3)
     // else
       $ActiveMediaPath = $getActiveMedia[0]['media_name'];
     ?>
-  
 
-  <div class="box">
+
+        <div class="box">
           <div class="img-box">
-            <img src="<?php echo $ActiveMediaPath ?>" alt="" >
+            <img src="<?php echo $ActiveMediaPath ?>" alt="">
           </div>
           <small>
-          <i>posted <?php echo $getId[$i]['date_posted']?></i> <br>
-          <a href="" id="location">Location: <?php echo $getId[$i]['location']?></a>
-        </small>
+            <i>posted
+              <?php echo $getId[$i]['date_posted']?>
+            </i> <br>
+            <a href="" id="location">Location:
+              <?php echo $getId[$i]['location']?>
+            </a>
+          </small>
           <div class="detail-box">
             <h6>
               <?php echo $getId[$i]['property_name']?>
-              <sup>K<?php echo $getId[$i]['price']?></sup>
+              <sup>K
+                <?php echo $getId[$i]['price']?>
+              </sup>
             </h6>
-            
+
 
             <small>
               <?php echo $getId[$i]['property_desc']?>
-  </small>
+            </small>
 
             <div class="property-control">
-              <a href="" class="btn btn-success" data-toggle="modal" data-target=".bd-example-modal-lg<?php echo $getId[$i]['property_id']?>">View More</a>
-              <a type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalCenter<?php echo $getId[$i]['property_id'] ?>"><?php 
+              <a href="" class="btn btn-success" data-toggle="modal"
+                data-target=".bd-example-modal-lg<?php echo $getId[$i]['property_id']?>">View More</a>
+              <a type="button" class="btn btn-warning" data-toggle="modal"
+                data-target="#exampleModalCenter<?php echo $getId[$i]['property_id'] ?>">
+                <?php 
               if($getId[$i]['estate_for'] == 'rent')
                 echo 'Rent';
               else
                 echo 'Buy';
-              ?></a>
+              ?>
+              </a>
 
             </div>
           </div>
         </div>
-  
-  <?php
+
+        <?php
 
   }
  
 ?>
 
-        
+
 
 
       </div>
@@ -460,7 +483,7 @@ if(count($getId) >= 3)
               We aspire to
               provide flawless execution and delivery of our products and
               services. execution and delivery of our products and services.</p>
-              <a href= "https://wa.me/260964840235">
+            <a href="https://wa.me/260964840235">
               Get A Quote
             </a>
           </div>
@@ -556,7 +579,7 @@ if(count($getId) >= 3)
     <div class="container-fluid">
       <div class="heading_container">
         <h2>
-          Our Core Values
+          Belief and Principles
         </h2>
       </div>
       <div class="client_container">
@@ -568,13 +591,13 @@ if(count($getId) >= 3)
 
                 <div class="detail-box">
                   <h5>
-                    <span class="green">Integrity</span>
+                    <span class="green">Commitment</span>
                     <hr>
                   </h5>
                   <p>
-                    We embrace the highest standards of ethical behavior
-                    and transparency in every aspect of our business to yield a
-                    company that is trusted by its clients and stakeholders.</p>
+                    We are dedicated to our Mission and upholding our identity,
+                    upon which all our values are anchored, doing our work in
+                    Love.</p>
                 </div>
               </div>
             </div>
@@ -584,13 +607,13 @@ if(count($getId) >= 3)
 
                 <div class="detail-box">
                   <h5>
-                    <span class="green">Partnership</span>
+                    <span class="green">Honesty</span>
                     <hr>
                   </h5>
                   <p>
-                    Our success and delivery of quality programs and
-                    services are largely dependent upon the partnerships that we
-                    create with all of our internal and external stakeholders. </p>
+                    We are grounded on transparency and Truth as beacons and
+                    Pillars of our endeavors, dealing and communicating clearly
+                    in good faith.</p>
                 </div>
               </div>
             </div>
@@ -600,14 +623,13 @@ if(count($getId) >= 3)
 
                 <div class="detail-box">
                   <h5>
-                    <span class="green">Excellence</span>
+                    <span class="green">Diligence</span>
                     <hr>
                   </h5>
                   <p>
-                    Our commitment to professional excellence ensures
-                    that our clients receive the highest quality service. We aspire to
-                    provide flawless execution and delivery of our products and
-                    services. execution and delivery of our products and services.</p>
+                    Our Proficient efforts are appropriated towards
+                    producing results efficiently and excellently at highest
+                    possible levels of Performance.</p>
                 </div>
               </div>
             </div>
@@ -617,48 +639,20 @@ if(count($getId) >= 3)
 
                 <div class="detail-box">
                   <h5>
-                    <span class="green">Team Work</span>
+                    <span class="green">Purpose</span>
                     <hr>
                   </h5>
                   <p>
-                    Our culture of teamwork allows us to combine the
-                    quality and expertise of our professional staff to deliver optimum
-                    solutions to our clients.</p>
+                    We prove our excellence and standing, also highly
+                    upholding our identity and essence, exhibiting
+                    exceptional character, that coveys our distinct nature.</p>
                 </div>
               </div>
             </div>
 
-            <div class="carousel-item">
-              <div class="box">
+            
 
-                <div class="detail-box">
-                  <h5>
-                    <span class="green">Innovation</span>
-                    <hr>
-                  </h5>
-                  <p>
-                    We thrive on creativity and ingenuity. In today’s fastpaced
-                    technological climate, innovative ideas, concepts, and
-                    processes are essential to the continued success and growth of a
-                    company.</p>
-                </div>
-              </div>
-            </div>
-
-            <div class="carousel-item ">
-              <div class="box">
-
-                <div class="detail-box">
-                  <h5>
-                    <span class="green">Leadership</span>
-                    <hr>
-                  </h5>
-                  <p>
-                    The spirit of leadership is instilled in every
-                    employee.</p>
-                </div>
-              </div>
-            </div>
+            
 
           </div>
           <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
@@ -764,7 +758,8 @@ if(count($getId) >= 3)
                 <img src="images/mail.png" width="18px" alt="">
               </div>
               <p>
-                <small>info@greendale-estates.com</small>
+                <small>greenadaleestateltd@gmail.com</small>
+
               </p>
             </div>
           </div>
